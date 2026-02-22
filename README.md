@@ -9,6 +9,21 @@ Quick Links is a Chrome extension that finds every URL in your text selection an
 
 ---
 
+## Storefront Description
+Ever see a list of links and you wish you could open them all at once? No one built something like this and I need it all the time.
+
+Trigger by selecting and then pressing the hotkey (Ctrl+Q or Cmd+Q) or selecting the option from the context menu.
+
+* If the selection is a plain text we will extract and open all links in its own tab.
+* If the selection is a HTML we will find links with the same destination like the first link and open all the links in its own tab.
+
+Settings:
+* Select the domains you want to use the extension on. At least one domain must be added before the extension will activate.
+* Change the hotkey to something you prefer.
+* Choose if you want to confirm before autoclosing parent window.
+
+
+
 ## Features
 
 - **Right-click context menu** — "Open all URLs in new tabs" appears on any text selection containing URLs
@@ -58,7 +73,7 @@ Click the extension icon in the toolbar to open settings.
 
 | Setting | Description | Default |
 |---------|-------------|---------|
-| **Allowed Domains** | Whitelist of hostnames where the extension is active. Leave empty to allow all sites. Type a domain and press `Enter` or `,` to add. | *(empty — all sites)* |
+| **Allowed Domains** | Hostnames where the extension is active. At least one domain must be added before the extension will trigger anywhere. Type a domain and press `Enter` or `,` to add. | *(empty — disabled everywhere)* |
 | **Current site shortcut** | Pill below the chip input — one click to add or remove the active tab's domain | — |
 | **Trigger Hotkey** | Click the field and press a key combination to record it. Click `×` to clear. | `Ctrl+Q` |
 | **Confirm Before Close** | When all child tabs are closed, show a confirmation dialog before closing the parent tab | Enabled |
@@ -76,7 +91,7 @@ Click the extension icon in the toolbar to open settings.
 | `content.js` | Injected into every page — reports selection changes, listens for hotkey |
 | `popup.html` | Settings UI markup and styles |
 | `popup.js` | Settings UI logic — chip input, hotkey recorder, toggle, current-site suggestion |
-| `icons/icon.svg` | Extension icon (indigo→cyan gradient chain link, scales to all sizes) |
+| `icons/` | Extension icons — PNG files at 16, 32, 48, and 128 px |
 
 ### How URL opening works
 
