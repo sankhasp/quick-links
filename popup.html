@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quick Links Settings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 360px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      background: #fff;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px 13px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .header svg { flex-shrink: 0; color: #2563eb; }
+    .header h1 { font-size: 14px; font-weight: 600; color: #111; }
+
+    /* ── Sections ── */
+    .section {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .section-title svg { color: #2563eb; flex-shrink: 0; }
+
+    .hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    /* ── Domain chips ── */
+    .chips-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 7px 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      min-height: 38px;
+      background: #fff;
+      cursor: text;
+    }
+    .chips-wrapper:focus-within { border-color: #2563eb; box-shadow: 0 0 0 2px #dbeafe; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px 2px 10px;
+      background: #e8f0fe;
+      color: #1d4ed8;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .chip button {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: #6b7280;
+      line-height: 1;
+      font-size: 14px;
+    }
+    .chip button:hover { color: #dc2626; }
+
+    #domain-input {
+      border: none;
+      outline: none;
+      font: inherit;
+      font-size: 12px;
+      color: #1a1a1a;
+      flex: 1;
+      min-width: 120px;
+      background: transparent;
+    }
+
+    /* ── Hotkey ── */
+    .hotkey-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #hotkey-input {
+      flex: 1;
+      padding: 7px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      background: #fff;
+      color: #1a1a1a;
+      outline: none;
+      caret-color: transparent;
+      user-select: none;
+    }
+    #hotkey-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px #dbeafe;
+    }
+    #hotkey-input.recording {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 2px #fef3c7;
+      color: #92400e;
+    }
+    #hotkey-input::placeholder { color: #9ca3af; }
+
+    #hotkey-clear {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      color: #6b7280;
+      font-size: 16px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    #hotkey-clear:hover { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+
+    .hotkey-hint { font-size: 11px; color: #6b7280; margin-top: 5px; }
+
+    /* ── Toggle switch ── */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toggle-label { color: #374151; }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #d1d5db;
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .toggle input:checked + .slider { background: #2563eb; }
+    .toggle input:checked + .slider::before { transform: translateX(18px); }
+
+    /* ── Current site suggestion ── */
+    .current-site-row {
+      margin-top: 6px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .current-site-row.visible { display: flex; }
+
+    .current-site-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px 3px 8px;
+      border-radius: 12px;
+      border: 1.5px dashed #93c5fd;
+      background: transparent;
+      color: #2563eb;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .current-site-btn:hover { background: #eff6ff; border-color: #2563eb; }
+
+    .current-site-added {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 4px 3px 10px;
+      border-radius: 12px;
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .current-site-added .remove-current {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      color: #6b7280;
+      border-radius: 50%;
+    }
+    .current-site-added .remove-current:hover { color: #dc2626; background: #fee2e2; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+    <h1>Quick Links Settings</h1>
+  </div>
+
+  <!-- Section 1: Allowed Domains -->
+  <div class="section">
+    <div class="section-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      Allowed Domains
+    </div>
+    <p class="hint">Leave empty to allow all sites</p>
+    <div class="chips-wrapper" id="chips-wrapper">
+      <input id="domain-input" type="text" placeholder="e.g. example.com" autocomplete="off" spellcheck="false" />
+    </div>
+    <div class="current-site-row" id="current-site-row">
+      <span>Current site:</span>
+      <button class="current-site-btn" id="current-site-add" title="Add this domain to the allowed list">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span id="current-site-domain"></span>
+      </button>
+      <span class="current-site-added" id="current-site-added" style="display:none">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="current-site-added-label"></span>
+        <button class="remove-current" id="current-site-remove" title="Remove this domain">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </span>
+    </div>
+  </div>
+
+  <!-- Section 2: Trigger Hotkey -->
+  <div class="section">
+    <div class="section-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/>
+      </svg>
+      Trigger Hotkey
+    </div>
+    <div class="hotkey-row">
+      <input id="hotkey-input" type="text" readonly placeholder="Click to record shortcut" />
+      <button id="hotkey-clear" title="Clear hotkey">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <p class="hotkey-hint">Click the field and press a key combination</p>
+  </div>
+
+  <!-- Section 3: Confirm Before Close -->
+  <div class="section">
+    <div class="section-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      Confirm Before Close
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Ask before closing the parent tab</span>
+      <label class="toggle">
+        <input type="checkbox" id="confirm-toggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

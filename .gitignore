@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+bun.lockb
+dist/
+.DS_Store
+*.log
+coverage/
+.claude
+CLAUDE.md
