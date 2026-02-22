@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Quick Links</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 3rem 1.25rem;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.125rem; font-weight: 600; margin-top: 2.25rem; margin-bottom: 0.75rem; }
+
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 2.5rem; }
+
+    p { margin-bottom: 1rem; }
+
+    ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    ul li { margin-bottom: 0.25rem; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #e0e0e0;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 2.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Quick Links &mdash; Last updated: February 22, 2026</p>
+
+    <h2>Overview</h2>
+    <p>Quick Links is a browser extension that opens URLs found in your text selection as new tabs. This policy explains what data the extension accesses and how it is used.</p>
+    <p><strong>Quick Links does not collect, transmit, or share any personal data. All information stays on your device.</strong></p>
+
+    <h2>Data stored locally</h2>
+    <p>The extension stores the following preferences in your browser's built-in sync storage (<code>chrome.storage.sync</code>):</p>
+    <table>
+      <thead>
+        <tr><th>Setting</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Allowed domains</td><td>The list of websites where the extension is enabled</td></tr>
+        <tr><td>Keyboard shortcut</td><td>Your custom hotkey for triggering the extension</td></tr>
+        <tr><td>Confirm before close</td><td>Whether to show a confirmation prompt when closing the source tab</td></tr>
+      </tbody>
+    </table>
+    <p>These values are synced across your own Chrome profile by the browser. They are never sent to any third-party server.</p>
+
+    <h2>Temporary session data</h2>
+    <p>When you open multiple URLs at once, the extension briefly tracks which tabs it opened in order to offer a "close source tab" prompt when you are done. This tracking is held in <code>chrome.storage.session</code> — it exists only for the current browser session and is cleared automatically when those tabs close.</p>
+
+    <h2>Data accessed but not stored</h2>
+    <ul>
+      <li><strong>Your text selection</strong> — read at the moment you trigger the extension to extract URLs. It is never stored or transmitted.</li>
+      <li><strong>The active tab's URL</strong> — read when you open the settings popup to show a one-click "add current site" suggestion. It is never stored or transmitted beyond that interaction.</li>
+    </ul>
+
+    <h2>Data not collected</h2>
+    <ul>
+      <li>No browsing history</li>
+      <li>No page content beyond the user-selected text at trigger time</li>
+      <li>No cookies or credentials</li>
+      <li>No analytics or usage tracking</li>
+      <li>No crash reporting</li>
+      <li>No advertising identifiers</li>
+    </ul>
+
+    <h2>Third-party services</h2>
+    <p>Quick Links does not use any third-party services, APIs, or analytics platforms.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If this policy changes, the updated version will be published at this URL with a revised date at the top.</p>
+
+    <h2>Contact</h2>
+    <p>If you have questions about this policy, please open an issue on the <a href="https://github.com/sankhasp/quick-links">GitHub repository</a>.</p>
+  </main>
+</body>
+</html>
